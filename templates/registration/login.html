@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% block head_title %}
+LOGIN
+{% endblock %}
+
+{% block general_content %}
+
+	<div class="container col-md-offset-4 ">
+		<br>
+		<br>
+		<div class="col-md-5 form_background">
+			<div class="">
+				<h1 class="color2">Iniciar Sesión</h1>
+			</div>
+
+			{% if form.errors %}
+				<p class="color2">Tu usuario y contraseña no coinciden, Por favor Intentelo de nuevo.</p>
+			{% endif%}
+
+			{% if next%}
+				{% if user.is_authenticated %}
+					<p class="color2">Tu cuenta no tiene acceso a esta pagina. Para proceder, Por favor inicia sesion con una cuenta que tenga acceso.</p>
+				{% else %}
+					<p class="color2">Por favor inicia sesion para ver esta pagina.</p>
+				{% endif %}
+			{% endif %}
+
+			<form method="post" action='{% url "login" %}'>{% csrf_token %}
+
+				<div class="form-group">
+	<!-- 				<td>{{ form.username.label_tag }}</td> -->
+					<label for="usuario" class="control-label">Usuario </label>
+					<div class="">
+						{{ form.username|add_class:"form-control" }}
+					</div>
+					
+				</div>
+
+				<div class="form-group">
+	<!-- 				<td>{{ form.password.label_tag }}</td> -->
+					<label for="contraseña" class="control-label">Contraseña </label>
+					<div class="">
+						{{ form.password|add_class:"form-control" }}
+					</div>
+	<!-- 				<td>{{ form.password }}</td> -->
+				</div>
+
+				<div class="form-group">
+					<div class="">
+						<input type="submit" class="btn btn-primary btn-lg btn-block btn_custom2" value="Iniciar Sesión" />
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" value="">
+								Recuérdame
+							</label>
+						</div>
+						<input type="hidden" name="next" value="" />
+					</div>
+				</div>
+
+			</form>
+
+			<hr style="background:#444444; border:0; height:1px" />
+			
+			<div class="">
+				<p class="col-md-6"><a href="">Crear una cuenta</a></p>
+				<p><a href="{% url 'password_reset' %}">¿Olvidó su contraseña?</a></p>
+			</div>
+
+		</div>	
+	</div>
+
+{% endblock %}
